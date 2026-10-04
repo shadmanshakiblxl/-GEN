@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>&GEN SYSTEM — Integrated Bio-Computational Platform</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Plus Jakarta Sans & Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600&family=Space+Grotesk:wght@200;300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- KaTeX for crisp mathematical formula rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['Space Grotesk', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                            950: '#052e16',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Strict enforcement: No italic text under any circumstances */
+        *, *::before, *::after, em, i, cite, span, p, h1, h2, h3, h4, h5, h6, strong, b, a, button, div {
+            font-style: normal !important;
+        }
+        
+        body {
+            background-color: #ffffff;
+            color: #052e16;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            letter-spacing: -0.015em;
+        }
+        
+        .font-thin-title {
+            font-weight: 200;
+            letter-spacing: -0.04em;
+        }
+
+        .font-ultra-light {
+            font-weight: 300;
+        }
+
+        /* Scroll reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Text Staggered Animation */
+        @keyframes fadeUpText {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-1 { animation: fadeUpText 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s; opacity: 0; }
+        .animate-fade-2 { animation: fadeUpText 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.4s; opacity: 0; }
+        .animate-fade-3 { animation: fadeUpText 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.6s; opacity: 0; }
+
+        /* Minimalist background grid line styling */
+        .minimal-grid {
+            background-size: 60px 60px;
+            background-image: 
+                linear-gradient(to right, rgba(21, 128, 61, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(21, 128, 61, 0.05) 1px, transparent 1px);
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #ffffff;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #16a34a;
+        }
+    </style>
+</head>
+<body class="bg-white text-brand-950 antialiased selection:bg-brand-700 selection:text-white">
+
+    <!-- Scroll Progress Indicator Bar -->
+    <div id="scrollProgressBar" class="fixed top-0 left-0 h-[2px] bg-brand-600 z-50 transition-all duration-150 w-0"></div>
+
+    <!-- Navigation Header -->
+    <header class="fixed top-0 left-0 w-full z-40 bg-white/95 backdrop-blur-md border-b border-brand-100 transition-all duration-300" id="mainHeader">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3">
+                <span class="font-mono text-xl tracking-tight font-extralight text-brand-900">&amp;GEN</span>
+                <span class="text-[10px] uppercase tracking-widest text-brand-700 font-mono pl-3 border-l border-brand-200">Integrated Bio-System</span>
+            </a>
+
+            <nav class="hidden md:flex items-center space-x-10 text-xs uppercase tracking-widest font-mono text-brand-900">
+                <a href="#overview" class="hover:text-brand-600 transition-colors">Overview</a>
+                <a href="#modules" class="hover:text-brand-600 transition-colors">Modules</a>
+                <a href="#infographic" class="hover:text-brand-600 transition-colors">Continuum</a>
+                <a href="#developer" class="hover:text-brand-600 transition-colors">Developer</a>
+            </nav>
+
+            <button onclick="openAccessModal()" class="text-xs font-mono uppercase tracking-widest px-6 py-2.5 border border-brand-800 bg-brand-950 text-white hover:bg-brand-800 transition-all duration-300">
+                Request Access
+            </button>
+        </div>
+    </header>
+
+    <!-- Full-Page Hero Section -->
+    <section class="relative min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20 border-b border-brand-100 minimal-grid">
+        
+        <div class="max-w-5xl mx-auto space-y-8 z-10">
+            <div class="animate-fade-1 text-xs font-mono tracking-widest text-brand-700 uppercase font-medium">
+                Unified Bio-Computational Intelligence Platform
+            </div>
+
+            <!-- Full-Page Hero Large Headline -->
+            <h1 class="animate-fade-2 text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-thin-title tracking-tighter text-brand-950 leading-[0.92]">
+                &amp;GEN SYSTEM
+            </h1>
+
+            <p class="animate-fade-3 max-w-2xl mx-auto text-lg sm:text-xl text-brand-900/80 font-ultra-light tracking-tight leading-relaxed">
+                Bridging macro-scale biological observation with micro-scale molecular modeling. One continuous digital framework for field bio-detection, genomic variant mapping, and 3D virtual drug screening.
+            </p>
+
+            <div class="animate-fade-3 pt-6 flex flex-col sm:flex-row items-center justify-center gap-5">
+                <button onclick="openAccessModal()" class="w-full sm:w-auto px-10 py-4 bg-brand-950 text-white text-xs font-mono uppercase tracking-widest hover:bg-brand-800 transition-all duration-300 flex items-center justify-center gap-3">
+                    <span>Request Access</span>
+                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                </button>
+                <a href="#overview" class="w-full sm:w-auto px-8 py-4 border border-brand-300 text-brand-950 font-mono text-xs uppercase tracking-widest hover:border-brand-800 transition-all duration-300 text-center bg-white">
+                    Explore Architecture
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2">
+            <span class="text-[10px] font-mono uppercase tracking-widest text-brand-700 font-medium">Scroll Down</span>
+            <div class="w-[1px] h-8 bg-brand-200 relative overflow-hidden">
+                <div class="w-full h-1/2 bg-brand-700 absolute top-0 animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metrics Section (Clean Minimalist Layout) -->
+    <section id="overview" class="border-b border-brand-100 py-20 bg-brand-50/30">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-2 md:grid-cols-4 gap-12 reveal">
+            <div class="space-y-2 border-l border-brand-300 pl-6">
+                <div class="text-4xl lg:text-5xl font-mono font-extralight text-brand-950">98.0%</div>
+                <div class="text-[11px] uppercase tracking-widest text-brand-700 font-mono">Vision Segmentation Accuracy</div>
+            </div>
+            <div class="space-y-2 border-l border-brand-300 pl-6">
+                <div class="text-4xl lg:text-5xl font-mono font-extralight text-brand-950">-11.96</div>
+                <div class="text-[11px] uppercase tracking-widest text-brand-700 font-mono">kcal/mol Docking Energy ($\Delta G$)</div>
+            </div>
+            <div class="space-y-2 border-l border-brand-300 pl-6">
+                <div class="text-4xl lg:text-5xl font-mono font-extralight text-brand-950">1.71 nM</div>
+                <div class="text-[11px] uppercase tracking-widest text-brand-700 font-mono">Predicted Dissociation ($K_d$)</div>
+            </div>
+            <div class="space-y-2 border-l border-brand-300 pl-6">
+                <div class="text-4xl lg:text-5xl font-mono font-extralight text-brand-950">3 Modules</div>
+                <div class="text-[11px] uppercase tracking-widest text-brand-700 font-mono">Unified Mobile Pipeline</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Core Modules Section (Explaining Models One-by-One) -->
+    <section id="modules" class="py-32 px-6 lg:px-12 max-w-7xl mx-auto">
+        <div class="mb-24 space-y-4 reveal">
+            <div class="text-xs font-mono uppercase tracking-widest text-brand-700">Detailed Architecture</div>
+            <h2 class="text-4xl md:text-6xl font-thin-title tracking-tight text-brand-950">
+                Three Interconnected Bio Modules
+            </h2>
+            <p class="max-w-2xl text-brand-900/80 font-ultra-light text-base sm:text-lg">
+                Operating seamlessly across all biological scales—from organismal field surveillance to mutation mechanics and structure-based drug discovery.
+            </p>
+        </div>
+
+        <div class="space-y-24 border-t border-brand-100 pt-16">
+            
+            <!-- MODULE 01 -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start reveal">
+                <div class="lg:col-span-1 font-mono text-xs text-brand-700">01 / 03</div>
+                
+                <div class="lg:col-span-4 space-y-4">
+                    <span class="text-xs font-mono uppercase tracking-widest text-brand-800 font-medium border-b border-brand-300 pb-1 inline-block">
+                        Computer Vision &amp; Field Sentinel
+                    </span>
+                    <h3 class="text-3xl sm:text-4xl font-thin-title text-brand-950">&amp;GEN Biological Intelligence</h3>
+                    <p class="text-xs uppercase font-mono tracking-widest text-brand-700">Bio Analyzer Module</p>
+                    <p class="text-brand-900/80 font-ultra-light text-sm leading-relaxed pt-2">
+                        A multi-modal computer vision and bio-surveillance engine designed for real-time field identification. The module automatically segments, classifies, and evaluates specimens across all biological tiers—from full organisms (e.g. Scolopendra subspinipes) to microscopic tissue slides (e.g. Iris germanica).
+                    </p>
+                </div>
+
+                <div class="lg:col-span-7 space-y-8 border-l border-brand-100 pl-0 lg:pl-12">
+                    <div class="space-y-3">
+                        <div class="text-xs font-mono uppercase tracking-widest text-brand-950 font-medium">1. Multi-Class Biological Segmentation</div>
+                        <p class="text-xs sm:text-sm text-brand-900/80 font-ultra-light leading-relaxed">
+                            Detects species, cell types, tissues, organs, and organelles with high-confidence accuracy scoring. Runs edge-optimized multi-scale convolutional neural networks to delineate individual tergite trunk segments, appendage counts, and histological layer boundaries.
+                        </p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="text-xs font-mono uppercase tracking-widest text-brand-950 font-medium">2. SENTINEL Hazard &amp; Biochemical Flags</div>
+                        <p class="text-xs sm:text-sm text-brand-900/80 font-ultra-light leading-relaxed">
+                            Identifies active toxins (e.g., Ssm Spooky Toxin, Phospholipase A2, neurotoxic KCNQ blockers) and automatically issues instantaneous safety, handling, and envenomation protocols to prevent field hazardous exposure.
+                        </p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="text-xs font-mono uppercase tracking-widest text-brand-950 font-medium">3. Genomic &amp; Evolutionary Profiling</div>
+                        <p class="text-xs sm:text-sm text-brand-900/80 font-ultra-light leading-relaxed">
+                            Maps physical visual observations directly to genetic markers ($COI$, $16S\text{ rRNA}$) and historical taxonomy lineages for rapid taxonomic classification without field lab sequencing delay.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-brand-100"></div>
+
+            <!-- MODULE 02 -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start reveal">
+                <div class="lg:col-span-1 font-mono text-xs text-brand-700">02 / 03</div>
+                
+                <div class="lg:col-span-4 space-y-4">
+                    <span class="text-xs font-mono uppercase tracking-widest text-brand-800 font-medium border-b border-brand-300 pb-1 inline-block">
+                        Translational Genomics
+                    </span>
+                    <h3 class="text-3xl sm:text-4xl font-thin-title text-brand-950">&amp;GEN Genomic Mapper</h3>
+                    <p class="text-xs uppercase font-mono tracking-widest text-brand-700">Variant Impact Explorer</p>
+                    <p class="text-brand-900/80 font-ultra-light text-sm leading-relaxed pt-2">
+                        A translational engine for evaluating genetic mutations and their downstream structural and physiological consequences across genomic loci and protein domains.
+                    </p>
+                </div>
+
+                <div class="lg:col-span-7 space-y-8 border-l border-brand-100 pl-0 lg:pl-12">
+                    <div class="space-y-3">
+                        <div class="text-xs font-mono uppercase tracking-widest text-brand-950 font-medium">1. Multi-Database Variant Scoring</div>
+                        <p class="text-xs sm:text-sm text-brand-900/80 font-ultra-light leading-relaxed">
+                            Integrates state-of-the-art pathogenicity metrics (AlphaMissense: 0.984, CADD: 34.0, REVEL: 0.942) for single nucleotide variants and missense mutations such as TP53 c.818G&gt;A (p.Arg273His).
+                        </p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="text-xs font-mono uppercase tracking-widest text-brand-950 font-medium">2. Transcription Factor &amp; Splice-Site Analysis</div>
+                        <p class="text-xs sm:text-sm text-brand-900/80 font-ultra-light leading-relaxed">
+                            Quantifies promoter binding affinity loss ($\Delta\text{Affinity}: -12.7\text{ bits}$) and evaluates splice donor/acceptor site disruptions using SpliceAI deep neural networks.
+                        </p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="text-xs font-mono uppercase tracking-widest text-brand-950 font-medium">3. 3D Structural Stability Mechanics</div>
+                        <p class="text-xs sm:text-sm text-brand-900/80 font-ultra-light leading-relaxed">
+                            Renders atomic 3D protein structures (e.g. PDB: 1TUP) to compute thermodynamic folding free energy changes ($\Delta\Delta G = -2.85\text{ kcal/mol}$), lost hydrogen bond networks, steric clashes, and altered solvent exposure.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-brand-100"></div>
+
+            <!-- MODULE 03 -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start reveal">
+                <div class="lg:col-span-1 font-mono text-xs text-brand-700">03 / 03</div>
+                
+                <div class="lg:col-span-4 space-y-4">
+                    <span class="text-xs font-mono uppercase tracking-widest text-brand-800 font-medium border-b border-brand-300 pb-1 inline-block">
+                        Computational Chemistry
+                    </span>
+                    <h3 class="text-3xl sm:text-4xl font-thin-title text-brand-950">&amp;GEN DRUG</h3>
+                    <p class="text-xs uppercase font-mono tracking-widest text-brand-700">Structure-Based Virtual Screening</p>
+                    <p class="text-brand-900/80 font-ultra-light text-sm leading-relaxed pt-2">
+                        A computational chemistry tool for rational ligand design, active pocket preparation, virtual screening, and nano-molar binding kinetics prediction.
+                    </p>
+                </div>
+
+                <div class="lg:col-span-7 space-y-8 border-l border-brand-100 pl-0 lg:pl-12">
+                    <div class="space-y-3">
+                        <div class="text-xs font-mono uppercase tracking-widest text-brand-950 font-medium">1. Target-Ligand Docking</div>
+                        <p class="text-xs sm:text-sm text-brand-900/80 font-ultra-light leading-relaxed">
+                            Simulates atomic interactions between target receptor catalytic binding clefts (e.g., HIV-1 Protease, PDB: 1HSG) and small-molecule candidate libraries formatted via SMILES strings.
+                        </p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="text-xs font-mono uppercase tracking-widest text-brand-950 font-medium">2. Affinity &amp; Kinetic Scoring</div>
+                        <p class="text-xs sm:text-sm text-brand-900/80 font-ultra-light leading-relaxed">
+                            Calculates total free binding energy ($\Delta G = -11.96\text{ kcal/mol}$) and accurately predicts binding kinetic constants: dissociation constant ($K_d: 1.71\text{ nM}$), inhibition constant ($K_i: 1.85\text{ nM}$), and half-maximal inhibitory concentration ($\text{IC}_{50}: 3.70\text{ nM}$).
+                        </p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="text-xs font-mono uppercase tracking-widest text-brand-950 font-medium">3. Pharmacokinetics &amp; ADME Validation</div>
+                        <p class="text-xs sm:text-sm text-brand-900/80 font-ultra-light leading-relaxed">
+                            Evaluates Lipinski’s Rule of 5 drug-likeness compliance, molecular weight, LogP lipophilicity, ligand efficiency metrics, and active-site hydrogen-bond networks.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Interactive Multi-Scale Biological Continuum Infographic -->
+    <section id="infographic" class="py-28 bg-brand-50/30 border-y border-brand-100">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 space-y-16">
+            
+            <div class="space-y-4 max-w-3xl reveal">
+                <div class="text-xs font-mono uppercase tracking-widest text-brand-700">Interactive Pipeline Infographic</div>
+                <h2 class="text-4xl sm:text-5xl font-thin-title text-brand-950">
+                    The Multi-Scale Biological Continuum
+                </h2>
+                <p class="text-brand-900/80 font-ultra-light text-base">
+                    Select a pipeline stage to examine how data seamlessly flows from macroscopic field surveillance down to atomic therapeutic interactions.
+                </p>
+            </div>
+
+            <div class="reveal">
+                <!-- Interactive Selector Header -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 border-b border-brand-200 pb-8">
+                    <button onclick="setPipelineStep(0)" id="pstep-btn-0" class="p-6 text-left border-b-2 border-brand-800 transition-all">
+                        <div class="text-[11px] font-mono text-brand-700 mb-1">STAGE 01</div>
+                        <div class="text-xs font-mono uppercase tracking-widest text-brand-950 font-medium">1. Vision &amp; Sentinel</div>
+                        <div class="text-[11px] text-brand-900/70 font-ultra-light mt-1">Field Bio-Detection</div>
+                    </button>
+                    
+                    <button onclick="setPipelineStep(1)" id="pstep-btn-1" class="p-6 text-left border-b-2 border-transparent text-brand-900/60 hover:text-brand-950 transition-all">
+                        <div class="text-[11px] font-mono text-brand-700 mb-1">STAGE 02</div>
+                        <div class="text-xs font-mono uppercase tracking-widest text-brand-950 font-medium">2. Variant Impact</div>
+                        <div class="text-[11px] text-brand-900/70 font-ultra-light mt-1">Genomic Mapping</div>
+                    </button>
+
+                    <button onclick="setPipelineStep(2)" id="pstep-btn-2" class="p-6 text-left border-b-2 border-transparent text-brand-900/60 hover:text-brand-950 transition-all">
+                        <div class="text-[11px] font-mono text-brand-700 mb-1">STAGE 03</div>
+                        <div class="text-xs font-mono uppercase tracking-widest text-brand-950 font-medium">3. Folding Mechanics</div>
+                        <div class="text-[11px] text-brand-900/70 font-ultra-light mt-1">3D Structure Mechanics</div>
+                    </button>
+
+                    <button onclick="setPipelineStep(3)" id="pstep-btn-3" class="p-6 text-left border-b-2 border-transparent text-brand-900/60 hover:text-brand-950 transition-all">
+                        <div class="text-[11px] font-mono text-brand-700 mb-1">STAGE 04</div>
+                        <div class="text-xs font-mono uppercase tracking-widest text-brand-950 font-medium">4. Virtual Docking</div>
+                        <div class="text-[11px] text-brand-900/70 font-ultra-light mt-1">Affinity &amp; ADME</div>
+                    </button>
+                </div>
+
+                <!-- Dynamic Infographic Content View -->
+                <div class="py-10 space-y-8" id="pipelineContent">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Developer & Lead Architect Section -->
+    <section id="developer" class="py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-16 items-start reveal">
+            
+            <div class="lg:col-span-5 space-y-6">
+                <div class="text-xs font-mono uppercase tracking-widest text-brand-700">Lead Architect &amp; Creator</div>
+                <h2 class="text-4xl sm:text-5xl font-thin-title text-brand-950">
+                    Shadman Shakib
+                </h2>
+                <p class="text-brand-900/80 font-ultra-light text-base leading-relaxed">
+                    System architect and computational biologist specializing in unified bio-intelligence systems, deep learning for variant impact predictions, and structure-based virtual therapeutic screening.
+                </p>
+                <div class="pt-4 flex flex-col space-y-3 font-mono text-xs">
+                    <a href="mailto:shadman.shakib1@g.bracu.ac.bd" class="inline-flex items-center gap-3 text-brand-950 hover:text-brand-600 transition-colors">
+                        <i class="fa-regular fa-envelope text-brand-700"></i>
+                        <span>shadman.shakib1@g.bracu.ac.bd</span>
+                    </a>
+                    <a href="mailto:shadman.shakiblxl@gmail.com" class="inline-flex items-center gap-3 text-brand-950 hover:text-brand-600 transition-colors">
+                        <i class="fa-regular fa-envelope text-brand-700"></i>
+                        <span>shadman.shakiblxl@gmail.com</span>
+                    </a>
+                    <a href="tel:+8801580661064" class="inline-flex items-center gap-3 text-brand-950 hover:text-brand-600 transition-colors">
+                        <i class="fa-solid fa-phone text-brand-700"></i>
+                        <span>+880-1580661064</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 border-l border-brand-200 pl-0 lg:pl-12 space-y-8">
+                <div class="space-y-4">
+                    <div class="text-xs font-mono uppercase tracking-widest text-brand-700">Institutional Access</div>
+                    <h3 class="text-3xl font-thin-title text-brand-950">Platform Request &amp; Proposal Summary</h3>
+                    <p class="text-brand-900/80 font-ultra-light text-sm sm:text-base leading-relaxed">
+                        &amp;GEN is available for institutional research partners, bio-surveillance field units, and therapeutic discovery teams. Click below to open the complete system proposal letter and access credentials protocol.
+                    </p>
+                </div>
+                
+                <div class="flex flex-wrap gap-4 pt-2">
+                    <button onclick="openAccessModal()" class="px-8 py-4 bg-brand-950 text-white font-mono text-xs uppercase tracking-widest hover:bg-brand-800 transition-all flex items-center gap-3">
+                        <span>Open Request Access Proposal</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </button>
+                    <button onclick="copyContactInfo()" class="px-6 py-4 border border-brand-300 text-brand-950 font-mono text-xs uppercase tracking-widest hover:border-brand-800 transition-all flex items-center gap-2 bg-white">
+                        <i class="fa-regular fa-copy"></i>
+                        <span id="copyBtnText">Copy Contact Details</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-brand-200 py-12 px-6 lg:px-12 bg-white text-brand-950 text-xs font-mono">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="text-center md:text-left tracking-wider uppercase font-medium">
+                BUILD, DESIGN AND DEVELOP : SHADMAN SHAKIB
+            </div>
+            <div class="text-center md:text-right tracking-wider uppercase font-medium">
+                COPYRIGHT SHADMAN SHAKIB
+            </div>
+        </div>
+    </footer>
+
+    <!-- Pop-up Text Modal for "Request Access" -->
+    <div id="accessModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-all duration-300">
+        <!-- Backdrop -->
+        <div onclick="closeAccessModal()" class="absolute inset-0 bg-brand-950/40 backdrop-blur-sm"></div>
+
+        <!-- Modal Container -->
+        <div class="relative w-full max-w-4xl max-h-[85vh] bg-white border border-brand-200 shadow-2xl overflow-hidden flex flex-col transform scale-95 transition-transform duration-300" id="accessModalBox">
+            
+            <!-- Modal Header -->
+            <div class="px-8 py-5 border-b border-brand-100 flex items-center justify-between bg-brand-50/50">
+                <div class="flex items-center gap-3">
+                    <span class="font-mono text-lg font-light text-brand-950">&amp;GEN SYSTEM</span>
+                    <span class="text-xs font-mono uppercase tracking-widest text-brand-700 border-l border-brand-200 pl-3">Request Access Protocol</span>
+                </div>
+                <button onclick="closeAccessModal()" class="text-brand-950 hover:text-brand-600 text-2xl w-8 h-8 flex items-center justify-center transition-colors">
+                    &times;
+                </button>
+            </div>
+
+            <!-- Modal Text Body Content (Exact requested text rendered cleanly) -->
+            <div class="p-8 overflow-y-auto space-y-6 font-mono text-xs sm:text-sm text-brand-950 leading-relaxed" id="modalTextBody">
+                
+                <p class="font-normal text-brand-950 leading-relaxed">
+                    &amp;GEN, a unified, mobile-first bio-computational platform developed by Shadman Shakib. &amp;GEN bridges macro-scale biological observation with micro-scale molecular modeling, integrating field bio-detection, genomic variant mapping, and structure-based drug discovery into an end-to-end digital suite.
+                </p>
+
+                <p class="font-normal text-brand-950">
+                    The platform is built on three interconnected modules that operate across every level of biological complexity:
+                </p>
+
+                <div class="space-y-3 border-l border-brand-800 pl-4 py-1">
+                    <div class="font-medium text-brand-950 font-mono text-sm">1. &amp;GEN Biological Intelligence (Bio Analyzer)</div>
+                    <p class="text-brand-900/90 text-xs sm:text-sm font-sans font-ultra-light">
+                        A multi-modal computer vision and bio-surveillance engine designed for real-time field identification. The module automatically segments, classifies, and evaluates specimens across all biological tiers—from full organisms (Scolopendra subspinipes) to microscopic tissue slides (Iris germanica):
+                    </p>
+                    <ul class="list-disc list-inside space-y-1.5 text-xs text-brand-900/90 pl-1">
+                        <li><strong>Multi-Class Biological Segmentation:</strong> Detects species, cell types, tissues, organs, and organelles with confidence scoring.</li>
+                        <li><strong>SENTINEL Hazard &amp; Biochemical Flags:</strong> Identifies active toxins (e.g., Ssm Spooky Toxin, Phospholipase A2) and automatically issues safety and envenomation protocols.</li>
+                        <li><strong>Genomic &amp; Evolutionary Profiling:</strong> Maps observations to gene markers ($COI$, $16S\text{ rRNA}$) and historical lineage classifications.</li>
+                    </ul>
+                </div>
+
+                <div class="space-y-3 border-l border-brand-800 pl-4 py-1">
+                    <div class="font-medium text-brand-950 font-mono text-sm">2. &amp;GEN Genomic Mapper (Variant Impact Explorer)</div>
+                    <p class="text-brand-900/90 text-xs sm:text-sm font-sans font-ultra-light">
+                        A translational engine for evaluating genetic mutations and their structural consequences:
+                    </p>
+                    <ul class="list-disc list-inside space-y-1.5 text-xs text-brand-900/90 pl-1">
+                        <li><strong>Multi-Database Variant Scoring:</strong> Integrates pathogenicity metrics (AlphaMissense: 0.984, CADD: 34.0, REVEL: 0.942) for mutations like TP53 c.818G&gt;A.</li>
+                        <li><strong>Transcription Factor &amp; Splice-Site Analysis:</strong> Quantifies promoter binding loss ($\Delta\text{Affinity}: -12.7\text{ bits}$) and evaluates splicing disruptions via SpliceAI.</li>
+                        <li><strong>3D Structural Stability:</strong> Renders atomic 3D protein structures (PDB: 1TUP) to calculate folding energy changes ($\Delta\Delta G = -2.85\text{ kcal/mol}$), lost hydrogen bonds, and solvent exposure.</li>
+                    </ul>
+                </div>
+
+                <div class="space-y-3 border-l border-brand-800 pl-4 py-1">
+                    <div class="font-medium text-brand-950 font-mono text-sm">3. &amp;GEN DRUG (Structure-Based Virtual Screening)</div>
+                    <p class="text-brand-900/90 text-xs sm:text-sm font-sans font-ultra-light">
+                        A computational chemistry tool for rational ligand design and binding kinetics:
+                    </p>
+                    <ul class="list-disc list-inside space-y-1.5 text-xs text-brand-900/90 pl-1">
+                        <li><strong>Target-Ligand Docking:</strong> Simulates interactions between target receptors (e.g., HIV-1 Protease, PDB: 1HSG) and small molecules via SMILES input.</li>
+                        <li><strong>Affinity &amp; Kinetic Scoring:</strong> Calculates free binding energy ($\Delta G = -11.96\text{ kcal/mol}$) and predicts binding constants ($K_d: 1.71\text{ nM}$, $K_i: 1.85\text{ nM}$, $\text{IC}_{50}: 3.7\text{ nM}$).</li>
+                        <li><strong>Pharmacokinetics &amp; ADME:</strong> Evaluates Lipinski’s Rule of 5 compliance, ligand efficiency metrics, and active-site hydrogen-bond networks.</li>
+                    </ul>
+                </div>
+
+                <p class="text-xs sm:text-sm font-sans font-ultra-light text-brand-900">
+                    By combining field identification, variant analysis, and molecular docking into a single mobile application, &amp;GEN reduces the latency between biological discovery and computational insight.
+                </p>
+
+                <p class="text-xs sm:text-sm font-sans font-ultra-light text-brand-900">
+                    We welcome the opportunity to demonstrate the platform live or discuss potential pilot collaborations.
+                </p>
+
+                <div class="pt-4 border-t border-brand-200 font-mono text-xs space-y-1 text-brand-950">
+                    <div>Sincerely, <strong>Shadman Shakib</strong></div>
+                    <div class="text-brand-700 pt-2 font-medium uppercase">Contact Details:</div>
+                    <div>Email 1: <a href="mailto:shadman.shakib1@g.bracu.ac.bd" class="border-b border-brand-400">shadman.shakib1@g.bracu.ac.bd</a></div>
+                    <div>Email 2: <a href="mailto:shadman.shakiblxl@gmail.com" class="border-b border-brand-400">shadman.shakiblxl@gmail.com</a></div>
+                    <div>Phone: <a href="tel:+8801580661064" class="border-b border-brand-400">+880-1580661064</a></div>
+                </div>
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="px-8 py-4 border-t border-brand-100 bg-brand-50/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <span class="text-xs font-mono text-brand-700">&amp;GEN System Proposal Document</span>
+                <div class="flex items-center gap-3 w-full sm:w-auto">
+                    <button onclick="copyModalText()" class="flex-1 sm:flex-initial px-5 py-2.5 border border-brand-300 text-brand-950 text-xs font-mono uppercase tracking-widest hover:border-brand-800 transition-colors flex items-center justify-center gap-2 bg-white">
+                        <i class="fa-regular fa-copy"></i>
+                        <span id="copyModalBtnText">Copy Proposal</span>
+                    </button>
+                    <button onclick="closeAccessModal()" class="flex-1 sm:flex-initial px-6 py-2.5 bg-brand-950 text-white text-xs font-mono uppercase tracking-widest hover:bg-brand-800 transition-colors">
+                        Close
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Modal Control Functions
+        function openAccessModal() {
+            const modal = document.getElementById('accessModal');
+            const modalBox = document.getElementById('accessModalBox');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalBox.classList.remove('scale-95');
+            modalBox.classList.add('scale-100');
+            document.body.style.overflow = 'hidden';
+            
+            // Render Math formulas inside modal
+            if (window.renderMathInElement) {
+                renderMathInElement(document.getElementById('modalTextBody'), {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
+            }
+        }
+
+        function closeAccessModal() {
+            const modal = document.getElementById('accessModal');
+            const modalBox = document.getElementById('accessModalBox');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalBox.classList.remove('scale-100');
+            modalBox.classList.add('scale-95');
+            document.body.style.overflow = '';
+        }
+
+        function copyModalText() {
+            const fullText = document.getElementById('modalTextBody').innerText;
+            const btn = document.getElementById('copyModalBtnText');
+            document.execCommand('copy') || navigator.clipboard.writeText(fullText);
+            btn.innerText = "Copied Proposal!";
+            setTimeout(() => {
+                btn.innerText = "Copy Proposal";
+            }, 3000);
+        }
+
+        function copyContactInfo() {
+            const info = "Shadman Shakib\nEmail 1: shadman.shakib1@g.bracu.ac.bd\nEmail 2: shadman.shakiblxl@gmail.com\nPhone: +880-1580661064";
+            const btn = document.getElementById('copyBtnText');
+            document.execCommand('copy') || navigator.clipboard.writeText(info);
+            btn.innerText = "Copied Details!";
+            setTimeout(() => {
+                btn.innerText = "Copy Contact Details";
+            }, 3000);
+        }
+
+        // Interactive Infographic Data Model
+        const pipelineSteps = [
+            {
+                title: "01. Field Bio-Detection & SENTINEL Flagging",
+                subtitle: "Organism & Histological Microscopic Segmentation",
+                description: "The Biological Intelligence module ingests real-world macro imagery or histological microscopy slides. Neural vision networks instantly delineate taxa, cellular boundaries, and organelles while SENTINEL flags biochemical toxins and triggers immediate safety warnings.",
+                metrics: [
+                    { label: "Vision Precision", val: "95.0% - 98.0%" },
+                    { label: "SENTINEL Response", val: "<200ms Instant Flag" },
+                    { label: "Target Taxonomy", val: "Macro Organisms & Histology" }
+                ]
+            },
+            {
+                title: "02. Genomic Mapping & Variant Impact Scoring",
+                subtitle: "Single Nucleotide Variants & Splicing Delta Loss",
+                description: "Observed genetic markers ($COI$, $16S\text{ rRNA}$) and SNV loci are evaluated across ClinVar, AlphaMissense, CADD, and REVEL. Transcription factor binding losses and splice donor/acceptor site disruptions are computed in real time.",
+                metrics: [
+                    { label: "AlphaMissense Metric", val: "0.984 (Pathogenic)" },
+                    { label: "Promoter Drop", val: "-12.7 bits Affinity Loss" },
+                    { label: "Splicing Delta", val: "SpliceAI Verified Delta" }
+                ]
+            },
+            {
+                title: "03. 3D Atomic Protein Folding Mechanics",
+                subtitle: "Thermodynamic Free Energy Shifts & Steric Clashes",
+                description: "Genetic variants are mapped onto atomic 3D protein structures (e.g. PDB: 1TUP). Thermodynamic algorithms calculate folding stability shifts ($\Delta\Delta G = -2.85\text{ kcal/mol}$), disrupted hydrogen bonding networks, and altered residue exposure.",
+                metrics: [
+                    { label: "Folding Energy ($\Delta\Delta G$)", val: "-2.85 kcal/mol" },
+                    { label: "H-Bond Network", val: "Polar Contacts Severed" },
+                    { label: "Reference Structure", val: "PDB 1TUP (TP53 Locus)" }
+                ]
+            },
+            {
+                title: "04. Virtual Screening & Binding Kinetics",
+                subtitle: "Target-Ligand Docking & ADME Pharmacokinetics",
+                description: "Mutated catalytic pockets are targeted with small-molecule SMILES candidates. Virtual docking computes nanomolar dissociation constants ($K_d: 1.71\text{ nM}$) and verifies 100% Lipinski Rule of 5 pharmacokinetic compliance.",
+                metrics: [
+                    { label: "Free Energy ($\Delta G$)", val: "-11.96 kcal/mol" },
+                    { label: "Dissociation Constant ($K_d$)", val: "1.71 nM" },
+                    { label: "ADME Compliance", val: "Lipinski Rule of 5 Compliant" }
+                ]
+            }
+        ];
+
+        function setPipelineStep(idx) {
+            for (let i = 0; i < 4; i++) {
+                const btn = document.getElementById(`pstep-btn-${i}`);
+                if (i === idx) {
+                    btn.className = "p-6 text-left border-b-2 border-brand-800 text-brand-950 transition-all";
+                } else {
+                    btn.className = "p-6 text-left border-b-2 border-transparent text-brand-900/60 hover:text-brand-950 transition-all";
+                }
+            }
+
+            const step = pipelineSteps[idx];
+            const container = document.getElementById('pipelineContent');
+            container.innerHTML = `
+                <div class="space-y-4 max-w-4xl">
+                    <div class="text-xs font-mono uppercase tracking-widest text-brand-700">${step.subtitle}</div>
+                    <h3 class="text-3xl font-thin-title text-brand-950">${step.title}</h3>
+                    <p class="text-brand-900/80 font-ultra-light text-base leading-relaxed">${step.description}</p>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-6 font-mono text-xs border-t border-brand-200">
+                    ${step.metrics.map(m => `
+                        <div class="space-y-1">
+                            <div class="text-brand-700 uppercase tracking-widest">${m.label}</div>
+                            <div class="text-brand-950 font-medium text-base">${m.val}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            if (window.renderMathInElement) {
+                renderMathInElement(container, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
+            }
+        }
+
+        // Initialize Page Handlers
+        window.addEventListener('load', () => {
+            // Render all math formulas
+            if (window.renderMathInElement) {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
+            }
+
+            // Set default pipeline step
+            setPipelineStep(0);
+
+            // Top Scroll progress bar update
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('scrollProgressBar').style.width = scrolled + "%";
+            });
+
+            // Intersection Observer for Scroll Reveal Animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.12
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
